@@ -1,4 +1,4 @@
-name: @ko-developerhong/react-native-crypto-rsa Package
+name: react-native-crypto-rsa Package
 
 on:
   push:
