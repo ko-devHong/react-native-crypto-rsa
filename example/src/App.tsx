@@ -1,13 +1,22 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 
-import { StyleSheet, View, Text } from 'react-native';
-import { multiply } from 'react-native-crypto-rsa';
+import { StyleSheet, Text, View } from 'react-native';
+import RNCryptoRsa from '@ko-developerhong/react-native-crypto-rsa';
 
 export default function App() {
-  const [result, setResult] = React.useState<number | undefined>();
+  const [result, setResult] = React.useState<string | undefined>();
 
-  React.useEffect(() => {
-    multiply(3, 7).then(setResult);
+  useEffect(() => {
+    (async () => {
+      const { publicKey } = await RNCryptoRsa.init();
+      const encryptBase64String = await RNCryptoRsa.encrypt(
+        'hello world',
+        publicKey
+      );
+      const originString = await RNCryptoRsa.decrypt(encryptBase64String);
+      setResult(originString);
+    })();
   }, []);
 
   return (

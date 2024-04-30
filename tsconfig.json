@@ -2,7 +2,7 @@
   "compilerOptions": {
     "rootDir": ".",
     "paths": {
-      "react-native-crypto-rsa": ["./src/index"]
+      "@ko-developerhong/react-native-crypto-rsa": ["./src/index"]
     },
     "allowUnreachableCode": false,
     "allowUnusedLabels": false,

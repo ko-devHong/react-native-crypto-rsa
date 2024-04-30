@@ -1,5 +1,5 @@
 {
-  "name": "react-native-crypto-rsa",
+  "name": "@ko-developerhong/react-native-crypto-rsa",
   "version": "0.1.0",
   "description": "crypto library for rsa",
   "main": "lib/commonjs/index",
@@ -23,7 +23,8 @@
     "!**/__tests__",
     "!**/__fixtures__",
     "!**/__mocks__",
-    "!**/.*"
+    "!**/.*",
+    "!android/*.hprof"
   ],
   "scripts": {
     "example": "yarn workspace react-native-crypto-rsa-example",

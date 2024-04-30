@@ -17,6 +17,28 @@ const CryptoRsa = NativeModules.CryptoRsa
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
-  return CryptoRsa.multiply(a, b);
+class CryptoRsaClass {
+  private instance = CryptoRsa;
+  async init(keySize: number = 2048): Promise<{ publicKey: string }> {
+    return await this.instance.init(keySize);
+  }
+
+  async getPrivateKey(): Promise<string> {
+    return await this.instance.getPrivateKey();
+  }
+  async getPublicKey(): Promise<string> {
+    return await this.instance.getPublicKey();
+  }
+
+  async encrypt(message: string, publicKey: string): Promise<string> {
+    return await this.instance.encrypt(message, publicKey);
+  }
+
+  async decrypt(encryptBase64String: string): Promise<string> {
+    return await this.instance.decrypt(encryptBase64String);
+  }
 }
+
+const RNCryptoRsa = new CryptoRsaClass();
+
+export default RNCryptoRsa;
