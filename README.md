@@ -22,7 +22,7 @@ pod install
 npx pod-install ios
 ```
 ### Manual Installation
-> `Xcode`를 열고, 프로젝트 파일을 클릭한 후, `Build Phases` 탭에서 `Link Binary With Libraries` 섹션에 `libreact-native-crypto-rsa.a`를 추가합니다.
+> Open `Xcode`, click Project Files, and add `libreact-native-crypto-rsa.a` to the `Link Binary With Libraries` section on the `Build Phases` tab.
 
 ## Usage
 
