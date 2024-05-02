@@ -46,7 +46,6 @@ class CryptoRsaModule(reactContext: ReactApplicationContext) :
     runBlocking {
       launch { promise.resolve(cryptoRsa.privateKeyToPemString(cryptoRsa.getPrivateKey()!!))  }
     }
-    // decrypt https://stackoverflow.com/questions/22900570/key-from-string-in-java-rsa
   }
 
   @ReactMethod
@@ -54,7 +53,6 @@ class CryptoRsaModule(reactContext: ReactApplicationContext) :
     runBlocking {
       launch { promise.resolve(cryptoRsa.publicKeyToPemString(cryptoRsa.getPublicKey()!!))  }
     }
-    // decrypt https://stackoverflow.com/questions/22900570/key-from-string-in-java-rsa
   }
 
   @ReactMethod
@@ -62,7 +60,6 @@ class CryptoRsaModule(reactContext: ReactApplicationContext) :
     runBlocking {
       launch { promise.resolve(cryptoRsa.getSha512Text(pemString))  }
     }
-    // decrypt https://stackoverflow.com/questions/22900570/key-from-string-in-java-rsa
   }
 
   @RequiresApi(Build.VERSION_CODES.M)

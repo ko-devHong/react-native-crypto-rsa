@@ -55,9 +55,9 @@ class CryptoRsa(originReactContext: ReactApplicationContext, originKeySize:Int?)
     val keyStore = KeyStore.getInstance(KEY_STORE_TYPE)
     keyStore.load(null)
 
-//    if (keyStore.containsAlias(PRIVATE_KEY_ALIAS)) {
-//      keyStore.deleteEntry(PRIVATE_KEY_ALIAS);
-//    }
+    if (keyStore.containsAlias(PRIVATE_KEY_ALIAS)) {
+      keyStore.deleteEntry(PRIVATE_KEY_ALIAS);
+    }
     return keyStore
   }
   private fun getEncryptedSharedPreferences(): SharedPreferences {
@@ -249,8 +249,8 @@ class CryptoRsa(originReactContext: ReactApplicationContext, originKeySize:Int?)
   fun decrypt(encryptedDataString: String): String? {
     val decryptedData = Base64.decode(encryptedDataString,Base64.DEFAULT)
     val privateKey = getPrivateKey() ?: return null
-    Log.w(TAG,"decrypt privateKey : $privateKey")
-    Log.w(TAG,"decrypt decryptedData : $decryptedData")
+    Log.d(TAG,"decrypt privateKey : $privateKey")
+    Log.d(TAG,"decrypt decryptedData : $decryptedData")
     val cipher = getCipher()
     cipher.init(Cipher.DECRYPT_MODE, privateKey)
     return String(cipher.doFinal(decryptedData), Charsets.UTF_8)
