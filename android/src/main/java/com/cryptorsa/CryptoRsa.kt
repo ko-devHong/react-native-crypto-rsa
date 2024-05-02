@@ -263,8 +263,8 @@ class CryptoRsa(originReactContext: ReactApplicationContext, originKeySize:Int?)
     private const val KEY_STORE_TYPE = "AndroidKeyStore"
     private const val PREFERENCE_NAME = "ReactNativeRsaPreferences"
     private const val PRIVATE_KEY_ALIAS = "ReactNativeRsaPrivateKey"
-    private const val PUBLIC_HEADER = "RSA PUBLIC KEY"
-    private const val PRIVATE_HEADER = "RSA PRIVATE KEY"
+    private const val PUBLIC_HEADER = "PUBLIC KEY"
+    private const val PRIVATE_HEADER = "PRIVATE KEY"
     private const val TAG = "ReactNativeRsa"
     @RequiresApi(Build.VERSION_CODES.M)
     private const val RSA_ALGORITHM = KeyProperties.KEY_ALGORITHM_RSA;
