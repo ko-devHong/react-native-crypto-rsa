@@ -1,6 +1,6 @@
 # @ko-developerhong/react-native-crypto-rsa
 
-## 소개
+## introduce
 >`@ko-developerhong/react-native-crypto-rsa` The library provides RSA encryption and decryption in React Native applications, which allow you to generate public and private keys, and encrypt or decrypt messages.
 
 ## Installation
@@ -21,7 +21,7 @@ pod install
 # OR
 npx pod-install ios
 ```
-### 수동 설치
+### Manual Installation
 > `Xcode`를 열고, 프로젝트 파일을 클릭한 후, `Build Phases` 탭에서 `Link Binary With Libraries` 섹션에 `libreact-native-crypto-rsa.a`를 추가합니다.
 
 ## Usage
@@ -53,10 +53,19 @@ const { publicKey } = await RNCryptoRsa.init(keySize);
 const sha512Text = await RNCryptoRsa.getSHA512Text(publicKey); // hashText
 ```
 
-## precautions
+## Precautions
 > RSA encryption and decryption are CPU and memory intensive, which can affect performance when handling large amounts of data.
 > Public and private keys are critical to security, so they should be stored in a secure place and deleted if unnecessary.
 > The public key is used to encrypt the message, and the private key is used to decrypt the encrypted message.
+
+## Example
+```shell
+yarn example start
+
+yarn example android
+# OR
+yarn example ios
+```
 
 ## Contributing
 
