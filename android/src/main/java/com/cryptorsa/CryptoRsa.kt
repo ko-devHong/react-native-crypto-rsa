@@ -16,7 +16,6 @@ import org.bouncycastle.asn1.ASN1InputStream
 import org.bouncycastle.asn1.ASN1Primitive
 import org.bouncycastle.asn1.pkcs.PrivateKeyInfo
 import org.bouncycastle.asn1.pkcs.RSAPrivateKey
-import org.bouncycastle.asn1.x509.SubjectPublicKeyInfo
 import org.bouncycastle.util.io.pem.PemObject
 import org.bouncycastle.util.io.pem.PemReader
 import org.bouncycastle.util.io.pem.PemWriter
@@ -42,11 +41,11 @@ import javax.crypto.IllegalBlockSizeException
 import javax.crypto.NoSuchPaddingException
 
 
-class CryptoRsa(originReactContext: ReactApplicationContext, originKeySize:Int?) {
+class CryptoRsa(originReactContext: ReactApplicationContext, keySize:Int?) {
 
   init {
-    if (originKeySize != null) {
-      keySize = originKeySize
+    if (keySize != null) {
+      originKeySize = keySize
     }
     reactContext = originReactContext
   }
@@ -257,7 +256,7 @@ class CryptoRsa(originReactContext: ReactApplicationContext, originKeySize:Int?)
   }
 
   companion object {
-    private var keySize = 2048
+    private var originKeySize = 2048
     private lateinit var reactContext: ReactApplicationContext;
     private lateinit var reactKeyStore: KeyStore;
     private const val KEY_STORE_TYPE = "AndroidKeyStore"
