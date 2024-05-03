@@ -11,13 +11,24 @@ export default function App() {
 
   useEffect(() => {
     (async () => {
-      const { publicKey } = await RNCryptoRsa.init();
-      setPublicString(publicKey);
-      const encryptBase64String = await RNCryptoRsa.encrypt(
-        'hello world',
-        publicKey
-      );
-      console.log('@encryptBase64String : ', encryptBase64String);
+      try {
+        const { publicKey } = await RNCryptoRsa.init();
+        setPublicString(publicKey);
+        console.log('@publicKey  : ', publicKey);
+        // console.log('privateKey : ', privateKey);
+        const encryptBase64String = await RNCryptoRsa.encrypt(
+          'hello world',
+          publicKey
+        );
+        console.log('@encryptBase64String : ', encryptBase64String);
+        RNCryptoRsa.decrypt(encryptBase64String)
+          .then((rrr) => {
+            console.log('@decrypt String : ', rrr);
+          })
+          .catch(console.error);
+      } catch (e) {
+        console.error('error : ', e);
+      }
     })();
   }, []);
 

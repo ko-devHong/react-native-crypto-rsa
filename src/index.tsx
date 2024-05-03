@@ -19,8 +19,10 @@ const CryptoRsa = NativeModules.CryptoRsa
 
 class CryptoRsaClass {
   private instance = CryptoRsa;
-  async init(keySize: number = 2048): Promise<{ publicKey: string }> {
-    return await this.instance.init(keySize);
+  async init(
+    keySize: number = 2048
+  ): Promise<{ publicKey: string; privateKey?: string }> {
+    return await this.instance.generateKeys(keySize);
   }
 
   async getPrivateKey(): Promise<string> {
