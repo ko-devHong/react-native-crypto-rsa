@@ -1,7 +1,6 @@
 package com.cryptorsa
 
 import android.os.Build
-import android.util.Base64
 import androidx.annotation.RequiresApi
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
