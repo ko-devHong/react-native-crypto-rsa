@@ -14,7 +14,7 @@ export default function App() {
       try {
         const { publicKey } = await RNCryptoRsa.init();
         setPublicString(publicKey);
-        console.log('@publicKey  : ', publicKey);
+        // console.log('@publicKey  : ', publicKey);
         // console.log('privateKey : ', privateKey);
         const encryptBase64String = await RNCryptoRsa.encrypt(
           'hello world',
