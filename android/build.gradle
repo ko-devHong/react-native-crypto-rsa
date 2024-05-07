@@ -82,7 +82,7 @@ repositories {
   google()
 }
 
-def kotlin_version = "1.8.22"
+def kotlin_version = "1.8.0"
 
 dependencies {
   // For < 0.71, this will be from the local maven repo
