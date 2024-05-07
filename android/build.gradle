@@ -1,6 +1,6 @@
 buildscript {
   // Buildscript is evaluated before everything else so we can't use getExtOrDefault
-  def kotlin_version = "1.8.22"
+  def kotlin_version = rootProject.ext.has("kotlinVersion") ? rootProject.ext.get("kotlinVersion") : project.properties["CryptoRsa_kotlinVersion"]
 
   repositories {
     google()
@@ -82,7 +82,7 @@ repositories {
   google()
 }
 
-def kotlin_version = getExtOrDefault("kotlinVersion")
+def kotlin_version = "1.8.22"
 
 dependencies {
   // For < 0.71, this will be from the local maven repo
