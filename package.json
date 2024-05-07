@@ -1,6 +1,6 @@
 {
   "name": "@ko-developerhong/react-native-crypto-rsa",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "description": "crypto library for rsa",
   "private": false,
   "main": "lib/commonjs/index",
