@@ -25,7 +25,7 @@ class CryptoRsaModule(reactContext: ReactApplicationContext) :
 
   @RequiresApi(Build.VERSION_CODES.M)
   @ReactMethod
-  fun init(keySize:Int?, promise: Promise)  {
+  fun generateKeys(keySize:Int?, promise: Promise)  {
     runBlocking{
       try {
         cryptoRsa = CryptoRsa(_reactContext!!,keySize)
