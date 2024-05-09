@@ -259,7 +259,7 @@ class CryptoRsa(originReactContext: ReactApplicationContext, keySize:Int?) {
   @Throws(Base64DataException::class)
   fun base64Decode(base64String: String): String? {
     val originValues = Base64.decode(base64String,Base64.DEFAULT)
-    return originValues.toString()
+    return String(originValues,Charsets.UTF_8)
   }
 
   @Throws(Base64DataException::class)
