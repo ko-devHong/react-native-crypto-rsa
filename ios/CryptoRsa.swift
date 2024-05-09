@@ -35,13 +35,16 @@ class CryptoRsa: NSObject {
     }
     
     func getKeyFromKeychain(tag: String) -> SecKey? {
-        let query: [String: Any] = [
+        var query: [String: Any] = [
             kSecClass as String: kSecClassKey,
             kSecAttrApplicationTag as String: tag,
             kSecAttrKeyType as String: kSecAttrKeyTypeRSA,
-            kSecReturnRef as String: true,
-            kSecReturnData as String: kCFBooleanTrue ?? true
         ]
+        if(tag == publicTag) {
+            query[kSecReturnData as String] = kCFBooleanTrue ?? true
+        } else {
+            query[kSecReturnRef as String] = true
+        }
         
         var item: CFTypeRef?
         let status = SecItemCopyMatching(query as CFDictionary, &item)
@@ -178,6 +181,11 @@ class CryptoRsa: NSObject {
     func encrypt(message: String, pemString: String,resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Void {
         guard let data = message.data(using: .utf8) else { return reject(nil,nil,RuntimeError("Data is null")) }
         
+        // 데이터 크기 확인 (예시: RSA 키 크기 2048비트, 최대 데이터 크기 245바이트)
+        if data.count > 245 {
+            return reject(nil, nil, RuntimeError("Data size too large for RSA encryption"))
+        }
+        
         guard let publicKey = pemStringToPublicKey(pemString) else {
             return reject(nil,nil,RuntimeError("pemStringTopublicKey is null"))
         }
@@ -193,34 +201,39 @@ class CryptoRsa: NSObject {
             return reject(nil, nil, RuntimeError("Encryption error: \((error?.takeRetainedValue())!)"))
         }
         
-        resolve(cipherData.base64EncodedString())
+        resolve(base64EncodeString(cipherData))
     }
     
     @objc(decrypt:withResolver:withRejecter:)
     func decrypt(encryptedDataString: String, resolve:RCTPromiseResolveBlock,reject:RCTPromiseRejectBlock) -> Any? {
         guard let encryptedData = base64Decode(encryptedDataString) else {
-            print("base64Decode Faild")
-            return reject(nil,nil,RuntimeError("base64Decode Faild"))
+            print("base64Decode Failed")
+            return reject(nil, nil, RuntimeError("base64Decode Failed"))
         }
-        guard let loadedPrivateKey = getKeyFromKeychain(tag: privateTag ) else {
-            print("Load Faild privateKey in KeyChain ")
-            return reject(nil,nil,RuntimeError("Keychain Load failed"))
-        }
-        print("Load privateKey in KeyChain :", loadedPrivateKey)
         
-        guard SecKeyIsAlgorithmSupported(loadedPrivateKey, .decrypt, secKeyAlgorithm) else {
-            reject(nil,nil,RuntimeError("SecKeyIsAlgorithm not supported"))
+        guard let loadedPrivateKey = getKeyFromKeychain(tag: privateTag) else {
+            print("Load Failed privateKey in KeyChain")
+            reject(nil, nil, RuntimeError("Keychain Load failed"))
             return nil
         }
-        var error: Unmanaged<CFError>?
         
-        guard let clearData = SecKeyCreateDecryptedData(loadedPrivateKey,
-                                                        secKeyAlgorithm,
-                                                        encryptedData as CFData,
-                                                        &error) as Data? else {
-            print("Decryption error: \((error?.takeRetainedValue())!)")
-            return reject(nil,nil,RuntimeError("SecKeyIsAlgorithm not supported"))
-            
+        // Check if the encrypted data size matches the key size
+        let blockSize = SecKeyGetBlockSize(loadedPrivateKey)
+        if encryptedData.count != blockSize {
+            print("Encrypted data size does not match key block size")
+            reject(nil, nil, RuntimeError("Encrypted data size does not match key block size"))
+            return nil
+        }
+        
+        guard SecKeyIsAlgorithmSupported(loadedPrivateKey, .decrypt, secKeyAlgorithm) else {
+            reject(nil, nil, RuntimeError("SecKeyIsAlgorithm not supported"))
+            return nil
+        }
+        
+        var error: Unmanaged<CFError>?
+        guard let clearData = SecKeyCreateDecryptedData(loadedPrivateKey, secKeyAlgorithm, encryptedData as CFData, &error) as Data? else {
+            print("Decryption error: \(error?.takeRetainedValue().localizedDescription ?? "Unknown error")")
+            return reject(nil, nil, RuntimeError("Decryption error: \(error?.takeRetainedValue().localizedDescription ?? "Unknown error")"))
         }
         
         return resolve(String(data: clearData, encoding: .utf8))

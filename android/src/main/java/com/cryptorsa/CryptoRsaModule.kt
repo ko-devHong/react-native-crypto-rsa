@@ -75,6 +75,13 @@ class CryptoRsaModule(reactContext: ReactApplicationContext) :
     }
   }
 
+  @ReactMethod
+  fun base64Decode(base64String: String,promise: Promise) {
+    runBlocking {
+      launch { promise.resolve(cryptoRsa.base64Decode(base64String))  }
+    }
+  }
+
   companion object {
     const val NAME = "CryptoRsa"
     private lateinit var cryptoRsa: CryptoRsa

@@ -14,18 +14,21 @@ export default function App() {
       try {
         const { publicKey } = await RNCryptoRsa.init();
         setPublicString(publicKey);
-        // console.log('@publicKey  : ', publicKey);
+        console.log('@publicKey  : ', publicKey);
         // console.log('privateKey : ', privateKey);
         const encryptBase64String = await RNCryptoRsa.encrypt(
           'hello world',
           publicKey
         );
         console.log('@encryptBase64String : ', encryptBase64String);
-        RNCryptoRsa.decrypt(encryptBase64String)
-          .then((rrr) => {
-            console.log('@decrypt String : ', rrr);
-          })
-          .catch(console.error);
+        RNCryptoRsa.base64Decode(encryptBase64String).then((str) =>
+          console.log('base64Decode', str)
+        );
+        // RNCryptoRsa.decrypt(encryptBase64String)
+        //   .then((rrr) => {
+        //     console.log('@decrypt String : ', rrr);
+        //   })
+        //   .catch(console.error);
       } catch (e) {
         console.error('error : ', e);
       }
@@ -35,6 +38,7 @@ export default function App() {
   const decryptString = async () => {
     console.log('base64String : ', base64String);
     const originString = await RNCryptoRsa.decrypt(base64String);
+    console.log('originString : ', originString);
     setResult(originString);
   };
 

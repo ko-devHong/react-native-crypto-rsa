@@ -43,6 +43,10 @@ class CryptoRsaClass {
   async getSHA512Text(pemString: string): Promise<string> {
     return await this.instance.getSHA512Text(pemString);
   }
+
+  async base64Decode(base64String: string): Promise<string> {
+    return await this.instance.base64Decode(base64String);
+  }
 }
 
 const RNCryptoRsa = new CryptoRsaClass();

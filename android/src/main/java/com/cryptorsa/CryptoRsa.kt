@@ -255,6 +255,12 @@ class CryptoRsa(originReactContext: ReactApplicationContext, keySize:Int?) {
     return String(cipher.doFinal(decryptedData), Charsets.UTF_8)
   }
 
+  @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class, IllegalBlockSizeException::class, BadPaddingException::class, NoSuchPaddingException::class, InvalidKeyException::class)
+  fun base64Decode(base64String: String): String? {
+    val originValues = Base64.decode(base64String,Base64.DEFAULT)
+    return originValues.toString()
+  }
+
   companion object {
     private var originKeySize = 2048
     private lateinit var reactContext: ReactApplicationContext;
