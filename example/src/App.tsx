@@ -21,14 +21,21 @@ export default function App() {
           publicKey
         );
         console.log('@encryptBase64String : ', encryptBase64String);
-        RNCryptoRsa.base64Decode(encryptBase64String).then((str) =>
-          console.log('base64Decode', str)
+        RNCryptoRsa.decrypt(encryptBase64String)
+          .then((rrr) => {
+            console.log('@decrypt String : ', rrr);
+          })
+          .catch(console.error);
+        console.log('@@@@ bae64 test start ');
+        RNCryptoRsa.base64Encode(JSON.stringify({ keys: 'hello world' })).then(
+          (base64String) => {
+            console.log('@@@ base64String : ', base64String);
+            RNCryptoRsa.base64Decode(base64String).then((originString) => {
+              console.log('@@@ originString : ', originString);
+            });
+          }
         );
-        // RNCryptoRsa.decrypt(encryptBase64String)
-        //   .then((rrr) => {
-        //     console.log('@decrypt String : ', rrr);
-        //   })
-        //   .catch(console.error);
+        console.log('@@@@ bae64 test end ');
       } catch (e) {
         console.error('error : ', e);
       }

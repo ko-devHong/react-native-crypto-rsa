@@ -6,6 +6,7 @@ import android.os.Build
 import android.security.keystore.KeyGenParameterSpec
 import android.security.keystore.KeyProperties
 import android.util.Base64
+import android.util.Base64DataException
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.security.crypto.EncryptedSharedPreferences
@@ -255,10 +256,16 @@ class CryptoRsa(originReactContext: ReactApplicationContext, keySize:Int?) {
     return String(cipher.doFinal(decryptedData), Charsets.UTF_8)
   }
 
-  @Throws(NoSuchAlgorithmException::class, InvalidKeySpecException::class, IllegalBlockSizeException::class, BadPaddingException::class, NoSuchPaddingException::class, InvalidKeyException::class)
+  @Throws(Base64DataException::class)
   fun base64Decode(base64String: String): String? {
     val originValues = Base64.decode(base64String,Base64.DEFAULT)
     return originValues.toString()
+  }
+
+  @Throws(Base64DataException::class)
+  fun base64Encode(message: String): String? {
+    val byteArray = message.toByteArray(Charsets.UTF_8)
+    return Base64.encodeToString(byteArray, Base64.DEFAULT)
   }
 
   companion object {

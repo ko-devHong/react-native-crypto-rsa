@@ -1,6 +1,7 @@
 package com.cryptorsa
 
 import android.os.Build
+import android.util.Base64
 import androidx.annotation.RequiresApi
 import com.facebook.react.bridge.Promise
 import com.facebook.react.bridge.ReactApplicationContext
@@ -79,6 +80,13 @@ class CryptoRsaModule(reactContext: ReactApplicationContext) :
   fun base64Decode(base64String: String,promise: Promise) {
     runBlocking {
       launch { promise.resolve(cryptoRsa.base64Decode(base64String))  }
+    }
+  }
+
+  @ReactMethod
+  fun base64Encode(message: String,promise: Promise) {
+    runBlocking {
+      launch { promise.resolve( cryptoRsa.base64Encode(message))  }
     }
   }
 

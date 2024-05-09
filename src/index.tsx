@@ -47,6 +47,10 @@ class CryptoRsaClass {
   async base64Decode(base64String: string): Promise<string> {
     return await this.instance.base64Decode(base64String);
   }
+
+  async base64Encode(message: string): Promise<string> {
+    return await this.instance.base64Encode(message);
+  }
 }
 
 const RNCryptoRsa = new CryptoRsaClass();
